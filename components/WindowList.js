@@ -19,7 +19,7 @@ import { FixedSizeList as List } from 'react-window';
             itemHeight={70}
             itemGap={10}
             items={items}
-            item={(index) => <div>{items[index]}</div>}
+            item={(index, items) => <div>{items[index]}</div>}
             callback={(index, event) => { console.log(index, event) }}
         />
 */
@@ -33,8 +33,6 @@ export default function WindowList(props) {
             width: 300,
             itemHeight: 70,
             itemGap: 10,
-            items: Array.from({ length: 100 }).map((_, index) => `Item ${index}`),
-            item: (index) => <div>{defaultProps.items[index]}</div>,
             callback: (index) => { console.log(index) },
         }
         setProps({...defaultProps, ...props})
@@ -69,7 +67,7 @@ export default function WindowList(props) {
             }
         }} 
         onClick={(event) => handleRowClick(index, event)}>
-            {_props.item(index)}
+            {_props.item(index, _props.items)}
         </div>
     )
     

@@ -5,11 +5,13 @@ import WindowList from './WindowList'
 /*
     props:
         items: array of items to render
+        item: (index, list) function to render each item
         callback: (index, event) function to call when an item is clicked
 
     Example:
         <SearchableList
             items={items}
+            item={(index, _items) => <div>{_items[index]}</div>}
             callback={(value) => { console.log("You choose item with index: " + value) }}
         />
 */
@@ -23,8 +25,6 @@ export default function SearchableList(props) {
             width: 700,
             itemHeight: 70,
             itemGap: 10,
-            items: Array.from({ length: 100 }).map((_, index) => `Item ${index}`),
-            item: (index) => <div>{defaultProps.items[index]}</div>,
             callback: (value, event) => { console.log(value, event) },
         }
         setProps({...defaultProps, ...props})
@@ -46,7 +46,6 @@ export default function SearchableList(props) {
                         placeholder="Sök"
                         items={_props.items}
                         callback={(value) => { setSearchResults(value) }}
-                        {...props}
                     />
                     <br />
                     <WindowList
@@ -57,7 +56,6 @@ export default function SearchableList(props) {
                         items={searchResults ? searchResults : _props.items}
                         item={_props.item}
                         callback={(index, event) => { _props.callback(index, event) }}
-                        {...props}
                     />
             </div>
             }
